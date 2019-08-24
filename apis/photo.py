@@ -31,12 +31,12 @@ def get_photo_type_from_categories(categories):
 class Photo:
     DATA_FOLDER = ""
 
-    def __init__(self):
+    def __init__(self, shortcode, public_url, likes, comments, caption):
 
         self.filename = None
         self.bboxed_filename = None
-        self.shortcode = None
-        self.public_url = None
+        self.shortcode = shortcode
+        self.public_url = public_url
         self.instagram_user_id = None
 
         self.racy_score = 0
@@ -52,9 +52,9 @@ class Photo:
 
         self.pose_image_filename = None
 
-        self.likes = 0
-        self.comments = 0
-        self.caption = None
+        self.likes = likes
+        self.comments = comments
+        self.caption = caption
 
     @property
     def type(self):

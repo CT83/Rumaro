@@ -7,40 +7,44 @@ from itertools import islice
 import cv2
 from instaloader import Profile, Instaloader
 
-from apis.config import DATA_FOLDER, MAX_POSTS_TO_ANALYSE, DEEPFASHION_API_KEY, IMAGE_TYPES
+from apis.config import DATA_FOLDER, MAX_POSTS_TO_ANALYSE, DEEPFASHION_API_KEY, IMAGE_TYPES, MS_COGNITIVE_FACE_KEY, \
+    MS_COGNITIVE_VISION_KEY
 from apis.data_groomer import DataGroomer
 from apis.dl_image_analyzer import DlImageAnalyzer
+from apis.instagram_user import InstagramUser
 from apis.photo import Photo
 from app.utils.file_utils import draw_bbox_on_image
 
 
-def run_analysis(instagram_id):
+def run_analysis(instagram_user):
     L = Instaloader()
-    profile = Profile.from_username(L.context, instagram_id)
+    profile = Profile.from_username(L.context, instagram_user.instagram_id)
     posts = profile.get_posts()
 
     if profile.mediacount > MAX_POSTS_TO_ANALYSE:
+        print("Sorting according to likes+comments ...")
         posts_sorted_by_likes = sorted(profile.get_posts(), key=lambda p: p.likes + p.comments)
         posts = []
         for post in islice(posts_sorted_by_likes, MAX_POSTS_TO_ANALYSE):
+            print("Adding post...")
             posts.append(post)
 
     instagram_user.name = profile.full_name
     instagram_user.followers = profile.followers
     instagram_user.profile_picture_url = profile.get_profile_pic_url()
 
-    photos = []
+    instagram_user.photos = []
     for post in posts:
         photo = Photo(shortcode=post.shortcode, public_url=post.url,
                       likes=post.likes, comments=post.comments, caption=post.caption)
-        photos.append(photo)
+        instagram_user.photos.append(photo)
 
-    print("Total Photos {} by {}".format(len(photos), instagram_id))
-    for photo in photos:
-        print("Analysing {} of {}...".format(photos.index(photo), len(photos)))
+    print("Total Photos {} by {}".format(len(instagram_user.photos), instagram_user.instagram_id))
+    for photo in instagram_user.photos:
+        print("Analysing {} of {}...".format(instagram_user.photos.index(photo), len(instagram_user.photos)))
 
-        analyzer = DlImageAnalyzer(subscription_key=os.environ['MS_COGNITIVE_VISION_KEY'],
-                                   face_subscription_key=os.environ['MS_COGNITIVE_FACE_KEY'],
+        analyzer = DlImageAnalyzer(subscription_key=MS_COGNITIVE_VISION_KEY,
+                                   face_subscription_key=MS_COGNITIVE_FACE_KEY,
                                    public_image_url=photo.public_url,
                                    deepfashion_api_key=DEEPFASHION_API_KEY)
         analyzer.analyze_image()
@@ -66,10 +70,10 @@ def run_analysis(instagram_id):
         photo.bboxed_filename = save_bboxed_objs_from_image(photo)
         time.sleep(4)
 
-
     data_groomer = DataGroomer(instagram_user=instagram_user)
     data_groomer.start()
-    print("Analyzed {}'s Profile Sucessfully!".format(instagram_id))
+    print("Analyzed {}'s Profile Sucessfully!".format(instagram_user.instagram_id))
+    return instagram_user
 
 
 def save_bboxed_objs_from_image(photo):
@@ -85,3 +89,8 @@ def save_bboxed_objs_from_image(photo):
     f_name = str(uuid.uuid1()) + '.jpg'
     cv2.imwrite(os.path.join(DATA_FOLDER, f_name), image)
     return f_name
+
+
+if __name__ == '__main__':
+    insta_user = InstagramUser(instagram_id="derjannik_")
+    run_analysis(insta_user)

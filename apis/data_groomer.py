@@ -4,7 +4,7 @@ import uuid
 import matplotlib.pyplot as plt
 from flask import current_app
 
-from app.main.deep_learning.models import IMAGE_TYPES
+from apis.config import IMAGE_TYPES
 
 
 class DataGroomer:
