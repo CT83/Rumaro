@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        body {
+            background: #fff;
+        }
+
+        .input-field input[type=date]:focus + label,
+        .input-field input[type=text]:focus + label,
+        .input-field input[type=email]:focus + label,
+        .input-field input[type=password]:focus + label {
+            color: #FED400;
+        }
+
+        .input-field input[type=date]:focus,
+        .input-field input[type=text]:focus,
+        .input-field input[type=email]:focus,
+        .input-field input[type=password]:focus {
+            border-bottom: 2px solid #FED400;
+            box-shadow: none;
+        }
+    </style>
+
+    <div class="section"></div>
+    <main class="center-align">
+        <img class="responsive-img" style="width: 250px;"
+             src="{{ url_for('static', filename="images/logo.png") }}"/>
+        <div class="section"></div>
+
+
+        <div class="container">
+            <div class="z-depth-1 grey lighten-4 row"
+                 style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                <h5 class="grey-text">Signup</h5>
+
+
+                <form class="col s12" method="post">
+                    <div class='row'>
+                        <div class='col s12'>
+                            {{ form.csrf_token }}
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            {{ form.name }}
+                            <label for="{{ form.name.id }}">{{ form.name.label }}</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            {{ form.instagram_id }}
+                            <label for="{{ form.instagram_id.id }}">{{ form.instagram_id.label }}</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            {{ form.email }}
+                            <label for="{{ form.email.id }}">{{ form.email.label }}</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            {{ form.password }}
+                            <label for="{{ form.password.id }}">{{ form.password.label }}</label>
+                        </div>
+                        <label style='float: right;'>
+                            <a class='yellow-text text-darken-3' href='{{ url_for('Login.login') }}'><b>Login
+                                Instead?</b></a>
+                        </label>
+                    </div>
+
+                    <br/>
+
+                    <div class='row'>
+                        <button type='submit' name='btn_login'
+                                class='col s12  btn-large btn-primary waves-effect'>Signup
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}

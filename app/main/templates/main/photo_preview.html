@@ -1,0 +1,28 @@
+<div class="col s6 m3">
+    <div class="card">
+        <div class="card-image">
+            <img src="{{ url_for('main.data_file',filename=photo.bboxed_filename) }}"
+            />
+            <span class="card-title">Likes: {{ photo.likes }} | Comments {{ photo.comments }}</span>
+        </div>
+        <div class="card-content">
+            <p>{{ photo.ai_caption }}</p>
+            <p>{{ photo.id }}</p>
+            {% if photo.top_emotions %}
+                <p><b>Emotion</b><br>
+                    {% for emotion, value in  photo.top_emotions.items() %}
+                        {{ emotion }} - {{ value }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+
+            {% if photo.apparels %}
+                <p><b>Fashion</b><br>
+                    {% for apparel in photo.apparels %}
+                        {{ apparel.get('article_name') }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</div>

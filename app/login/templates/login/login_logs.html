@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block content %}
+
+
+    <div class="center-align">
+        <h3>Login Logs</h3>
+    </div>
+
+    {% with successful_sessions=successful_sessions,failed_sessions=failed_sessions %}
+        {% include 'login/login_logs/pie_chart.html' %}
+    {% endwith %}
+
+    <div class="container">
+        <div class="card">
+            <div class="card-panel">
+                {{ table }}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#login_logs_table').DataTable({
+                searching: true,
+                paging: false,
+                rowCallback: function (row, data, index) {
+                    if (data[4] == "Login") {
+                        $(row).css('background-color', '#')
+                    } else if (data[4] == "Logout") {
+                        $(row).css('background-color', '#white')
+                    } else if (data[4] == "Failed") {
+                        $(row).css('background-color', '#fcd4d4')
+                    }
+                }
+            });
+
+        });
+    </script>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+{% endblock %}
