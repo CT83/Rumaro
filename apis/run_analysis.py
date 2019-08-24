@@ -8,12 +8,13 @@ import cv2
 from instaloader import Profile, Instaloader
 
 from apis.config import DATA_FOLDER, MAX_POSTS_TO_ANALYSE, DEEPFASHION_API_KEY, IMAGE_TYPES, MS_COGNITIVE_FACE_KEY, \
-    MS_COGNITIVE_VISION_KEY
+    MS_COGNITIVE_VISION_KEY, TEMP_FOLDER
 from apis.data_groomer import DataGroomer
 from apis.dl_image_analyzer import DlImageAnalyzer
 from apis.instagram_user import InstagramUser
 from apis.photo import Photo
-from app.utils.file_utils import draw_bbox_on_image
+from apis.utils import print_report
+from app.utils.file_utils import draw_bbox_on_image, create_dir_if_not_exists
 
 
 def run_analysis(instagram_user):
@@ -73,6 +74,7 @@ def run_analysis(instagram_user):
     data_groomer = DataGroomer(instagram_user=instagram_user)
     data_groomer.start()
     print("Analyzed {}'s Profile Sucessfully!".format(instagram_user.instagram_id))
+    print_report(data_groomer=data_groomer, instagram_user=instagram_user)
     return instagram_user
 
 
@@ -92,5 +94,8 @@ def save_bboxed_objs_from_image(photo):
 
 
 if __name__ == '__main__':
+    create_dir_if_not_exists(DATA_FOLDER)
+    create_dir_if_not_exists(TEMP_FOLDER)
+
     insta_user = InstagramUser(instagram_id="derjannik_")
     run_analysis(insta_user)

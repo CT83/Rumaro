@@ -2,9 +2,8 @@ import os
 import uuid
 
 import matplotlib.pyplot as plt
-from flask import current_app
 
-from apis.config import IMAGE_TYPES
+from apis.config import IMAGE_TYPES, TEMP_FOLDER
 
 
 class DataGroomer:
@@ -138,7 +137,7 @@ class DataGroomer:
 
     def save_plot_to_file(self):
         filename = str(uuid.uuid1()) + '.png'
-        plt.savefig(os.path.join(current_app.config['TEMP_FOLDER'], filename), bbox_inches='tight')
+        plt.savefig(os.path.join(TEMP_FOLDER, filename), bbox_inches='tight')
         plt.close()
         return filename
 

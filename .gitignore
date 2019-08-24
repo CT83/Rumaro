@@ -126,3 +126,5 @@ outputs/*
 data
 temp
 database.db
+apis/data
+apis/temp

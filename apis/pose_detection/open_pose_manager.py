@@ -28,7 +28,7 @@ class OpenPoseManager:
 
         inWidth = self.width
         inHeight = self.height
-        net = cv.dnn.readNetFromTensorflow("apis/pose_detection/graph_opt.pb")
+        net = cv.dnn.readNetFromTensorflow("pose_detection/graph_opt.pb")
 
         frame = self.cv_image
 
