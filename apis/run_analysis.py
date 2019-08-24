@@ -13,8 +13,7 @@ from apis.data_groomer import DataGroomer
 from apis.dl_image_analyzer import DlImageAnalyzer
 from apis.instagram_user import InstagramUser
 from apis.photo import Photo
-from apis.utils import print_report
-from app.utils.file_utils import draw_bbox_on_image, create_dir_if_not_exists
+from apis.utils import print_report, create_dir_if_not_exists, draw_bbox_on_image
 
 
 def run_analysis(instagram_user):

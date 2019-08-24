@@ -3,8 +3,6 @@
 
 import cv2 as cv
 
-from app.utils.file_utils import url_to_image
-
 
 class OpenPoseManager:
 

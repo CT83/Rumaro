@@ -1,5 +1,8 @@
 import os
 
+import cv2
+from numpy import unicode
+
 
 def url_to_image(url):
     """Converts url to cv2 image"""
@@ -25,6 +28,18 @@ def create_dir_if_not_exists(output_dir):
     except OSError:
         if not os.path.isdir(output_dir):
             raise OSError("Failed to create" + output_dir)
+
+
+def draw_bbox_on_image(frame, x1, y1, x2, y2, text, color=(0, 0, 0), thickness=3):
+    if type(color) in (str, unicode):
+        color = color.lstrip('#')
+        rgb = (color[:2], color[2:4], color[4:])
+        color = tuple(int(x, 16) for x in rgb)
+    cv2.rectangle(frame, (x1, y1), (x2, y2),
+                  color=color, thickness=thickness)
+    cv2.putText(frame, text, (x1, y1),
+                cv2.FONT_HERSHEY_SIMPLEX, 1, color, thickness)
+    return frame
 
 
 def print_report(data_groomer, instagram_user):

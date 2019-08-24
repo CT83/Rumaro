@@ -1,9 +1,9 @@
 import Algorithmia
 import requests
 
+from apis.photo import get_photo_type_from_categories
 from apis.pose_detection.open_pose_manager import OpenPoseManager
-from app.main.deep_learning.models import get_photo_type_from_categories
-from app.utils.file_utils import url_to_image
+from apis.utils import url_to_image
 
 
 class DlImageAnalyzer:
