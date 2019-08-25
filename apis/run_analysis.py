@@ -1,5 +1,8 @@
 import json
 import os
+import sys
+
+sys.path.append(os.path.abspath('.'))
 import time
 import uuid
 from itertools import islice
@@ -11,12 +14,14 @@ from apis.config import DATA_FOLDER, MAX_POSTS_TO_ANALYSE, DEEPFASHION_API_KEY, 
     MS_COGNITIVE_VISION_KEY, TEMP_FOLDER
 from apis.data_groomer import DataGroomer
 from apis.dl_image_analyzer import DlImageAnalyzer
-from apis.instagram_user import InstagramUser
 from apis.photo import Photo
 from apis.utils import print_report, create_dir_if_not_exists, draw_bbox_on_image
 
 
 def run_analysis(instagram_user):
+    create_dir_if_not_exists(DATA_FOLDER)
+    create_dir_if_not_exists(TEMP_FOLDER)
+
     L = Instaloader()
     profile = Profile.from_username(L.context, instagram_user.instagram_id)
     posts = profile.get_posts()
@@ -90,11 +95,3 @@ def save_bboxed_objs_from_image(photo):
     f_name = str(uuid.uuid1()) + '.jpg'
     cv2.imwrite(os.path.join(DATA_FOLDER, f_name), image)
     return f_name
-
-
-if __name__ == '__main__':
-    create_dir_if_not_exists(DATA_FOLDER)
-    create_dir_if_not_exists(TEMP_FOLDER)
-
-    insta_user = InstagramUser(instagram_id="derjannik_")
-    run_analysis(insta_user)
