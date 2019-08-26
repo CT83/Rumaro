@@ -1,0 +1,17 @@
+DATA_FOLDER = "data"
+TEMP_FOLDER = "temp"
+
+MAX_POSTS_TO_ANALYSE = 25
+ENABLE_DEEP_FASHION = True
+
+MS_COGNITIVE_VISION_KEY = ""
+MS_COGNITIVE_FACE_KEY = ""
+INSTAGRAM_USERNAME = ""
+INSTAGRAM_PASSWORD = ""
+DEEPFASHION_API_KEY = ""
+IMAGE_TYPES = {
+    1: 'selfie',
+    2: 'people',
+    3: 'scenery',
+    4: 'unclassified'
+}

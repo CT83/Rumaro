@@ -10,6 +10,7 @@ researching more about the privacy concerns, Instagrams restrictive APIs and mix
 decided to scrape the idea and just Open Source it instead.
 
 ## Setup
+0. Setup MS Cognitive Services API Keys, DeepFashion, and Instagram Credentials
 1. Install the dependencies 
 `pip install -r requirements.txt`
 2. Run the actual analysis `python run_rumaro.py --instagram_id <INSTA_ID>`
