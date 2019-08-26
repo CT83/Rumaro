@@ -91,4 +91,10 @@ to monetise and market.
 In retrospect it seems really obvious that the plan was a bit flawed from the square one. 
 🤷🏽‍♂️
 
-Ehh... I did get to play around with a lot of Deep Learning APIs, so all was good.   
+Ehh... I did get to play around with a lot of Deep Learning APIs, so all was good.
+
+
+### Reach out to me!
+
+If you are interested to build something similar yourself, or would like help getting this up and running or if you are 
+_planning to turn this into a movie!!!_ Hit me up on Google Hangouts at `rohansawantct83@gmail.com`   
