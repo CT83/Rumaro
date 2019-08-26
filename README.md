@@ -1,4 +1,4 @@
-# Rumaro - An AI Image Analyzer
+# Rumaro - AI to recognize emotions, apparel, body pose and activity in images [![Build Status](https://travis-ci.com/CT83/SmoothStream.svg?branch=master)](https://travis-ci.com/CT83/SmoothStream)
 
 ![Drag Racing](images/rumaro-insta.png)
 
